@@ -5,6 +5,8 @@ import {
   Link
 } from 'react-router-dom'
 
+import $ from 'jquery'
+
 const Home = () => (
   <div>
     <h2>Home</h2>
@@ -22,6 +24,28 @@ const Topic = ({ match }) => (
     <h3>{match.params.topicId}</h3>
   </div>
 )
+
+class AsyncPage extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      ipAddress: false
+    }
+
+    $.getJSON('https://jsonip.com/', (data) => {
+      this.setState({ipAddress: data.ip})
+    })
+  }
+
+  render() {
+    return (
+      <div>
+        {this.state.ipAddress ? `Your IP address is: ${this.state.ipAddress}` : 'Loading...'}
+      </div>
+    )
+  }
+}
 
 class Form extends Component {
   constructor(props) {
@@ -93,6 +117,7 @@ const BasicExample = () => (
     <div>
       <ul>
         <li><Link to="/">Home</Link></li>
+        <li><Link to="/async">Async</Link></li>
         <li><Link to="/about">About</Link></li>
         <li><Link to="/topics">Topics</Link></li>
         <li><Link to="/form">The greatest form</Link></li>
@@ -101,6 +126,7 @@ const BasicExample = () => (
       <hr/>
 
       <Route exact path="/" component={Home}/>
+      <Route path="/async" component={AsyncPage}/>
       <Route path="/about" component={About}/>
       <Route path="/topics" component={Topics}/>
       <Route path="/form" component={Form}/>

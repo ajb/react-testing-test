@@ -1,12 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import { mount, ReactWrapper } from 'enzyme';
-import 'jest-enzyme';
+import React from 'react'
+import App from './App'
+import { mount, ReactWrapper } from 'enzyme'
+import nock from 'nock'
+import 'jest-enzyme'
 
 Object.defineProperty(window.location, 'pathname', {
   writable: true
-});
+})
 
 ReactWrapper.prototype.findByText = function(selector, text) {
   return this.find(selector).findWhere((node) => {
@@ -14,7 +14,7 @@ ReactWrapper.prototype.findByText = function(selector, text) {
   })
 }
 ReactWrapper.prototype.fillIn = function(value) {
-  this.simulate('change', { target: { value: value } });
+  this.simulate('change', { target: { value: value } })
 }
 
 ReactWrapper.prototype.click = function() {
@@ -26,3 +26,7 @@ global.visit = function(url) {
   const wrapper = mount(<App />)
   return wrapper
 }
+
+afterEach(() => {
+  nock.cleanAll()
+})
