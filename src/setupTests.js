@@ -3,6 +3,7 @@ import App from './App'
 import { mount, ReactWrapper } from 'enzyme'
 import nock from 'nock'
 import 'jest-enzyme'
+import $ from 'jquery'
 
 Object.defineProperty(window.location, 'pathname', {
   writable: true
@@ -25,6 +26,24 @@ global.visit = function(url) {
   window.location.pathname = url
   const wrapper = mount(<App />)
   return wrapper
+}
+
+global.waitForAjax = function() {
+  if ($.active === 0) {
+    return Promise.resolve()
+  } else {
+    return new Promise(resolve => {
+      let _poll = () => {
+        if ($.active === 0) {
+          resolve()
+        } else {
+          setTimeout(_poll, 5)
+        }
+      }
+
+      _poll()
+    })
+  }
 }
 
 afterEach(() => {

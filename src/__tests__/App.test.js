@@ -21,17 +21,13 @@ describe('the home page', () => {
     expect(wrapper.find('h2').text()).toEqual('Hello, Foobar!')
   })
 
-  test('it allows outgoing API calls', () => {
-    return new Promise(resolve => {
-      const wrapper = visit('/async')
-      setTimeout(function(){
-        expect(wrapper).toIncludeText('IP address')
-        resolve()
-      }, 1000)
-    })
+  test('it allows outgoing API calls', async () => {
+    const wrapper = visit('/async')
+    await waitForAjax()
+    expect(wrapper).toIncludeText('IP address')
   })
 
-  test('it mocks API calls', () => {
+  test('it mocks API calls', async () => {
     nock('https://jsonip.com').get('/').reply(
       200,
       {
@@ -45,12 +41,8 @@ describe('the home page', () => {
       ]
     )
 
-    return new Promise(resolve => {
-      const wrapper = visit('/async')
-      setTimeout(function(){
-        expect(wrapper).toIncludeText('lmaothisisyourip')
-        resolve()
-      }, 10) // Any lower and the AJAX callback won't be triggered?!
-    })
+    const wrapper = visit('/async')
+    await waitForAjax()
+    expect(wrapper).toIncludeText('lmaothisisyourip')
   })
 })
