@@ -1,5 +1,6 @@
 import React from 'react'
 import nock from 'nock'
+import {browserHistory} from "react-router"
 
 describe('the home page', () => {
   test('renders without crashing', () => {
@@ -10,6 +11,13 @@ describe('the home page', () => {
     const wrapper = visit('/')
     expect(wrapper.find('h2').text()).toEqual('Home')
     wrapper.findByText('a', 'About').click()
+    expect(wrapper.find('h2').text()).toEqual('About')
+  })
+
+  test('navigates to other pages programmatically', () => {
+    const wrapper = visit('/')
+    expect(wrapper.find('h2').text()).toEqual('Home')
+    wrapper.navigate('/about')
     expect(wrapper.find('h2').text()).toEqual('About')
   })
 

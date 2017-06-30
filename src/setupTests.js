@@ -22,6 +22,10 @@ ReactWrapper.prototype.click = function() {
   this.simulate('click', { button: 0 })
 }
 
+ReactWrapper.prototype.navigate = function(path) {
+  this.find('Router').prop('history').replace(path)
+}
+
 global.visit = function(url) {
   window.location.pathname = url
   const wrapper = mount(<App />)
