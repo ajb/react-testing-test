@@ -40,12 +40,11 @@ ReactWrapper.prototype.waitForAjax = function() {
   }
 }
 
-global.visit = function(url) {
-  Object.defineProperty(window.location, 'pathname', {
-    writable: true
-  })
+global.visit = function(path) {
+  // https://github.com/facebook/jest/issues/890#issuecomment-209698782
+  Object.defineProperty(window.location, 'pathname', { writable: true })
 
-  window.location.pathname = url
+  window.location.pathname = path
   return mount(<App />)
 }
 
