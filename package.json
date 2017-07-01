@@ -9,11 +9,14 @@
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-router-dom": "^4.1.1",
-    "react-test-renderer": "^15.6.1"
+    "react-test-renderer": "^15.6.1",
+    "wdio-selenium-standalone-service": "^0.0.9",
+    "webdriverio": "^4.8.0"
   },
   "devDependencies": {
     "jest-enzyme": "^3.3.0",
-    "react-scripts": "1.0.7"
+    "react-scripts": "1.0.7",
+    "wdio-jasmine-framework": "^0.3.1"
   },
   "scripts": {
     "start": "react-scripts start",
