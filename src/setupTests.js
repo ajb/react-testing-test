@@ -22,16 +22,21 @@ ReactWrapper.prototype.navigate = function(path) {
   this.find('Router').prop('history').replace(path)
 }
 
-ReactWrapper.prototype.waitForAjax = function() {
+ReactWrapper.prototype.waitForAjax = function(maxWait = 1000, pollInterval = 5) {
   if ($.active === 0) {
     return Promise.resolve()
   } else {
-    return new Promise(resolve => {
+    let timePassed = 0
+
+    return new Promise((resolve, reject) => {
       let _poll = () => {
         if ($.active === 0) {
           resolve()
+        } else if (timePassed > maxWait) {
+          reject(`More than ${maxWait} ms passed while waiting for AJAX calls to complete`)
         } else {
-          setTimeout(_poll, 5)
+          setTimeout(_poll, pollInterval)
+          timePassed += pollInterval
         }
       }
 

@@ -53,4 +53,18 @@ describe('the home page', () => {
     await wrapper.waitForAjax()
     expect(wrapper).toIncludeText('lmaothisisyourip')
   })
+
+  test('it has a timeout for waitForAjax', async () => {
+    nock('https://jsonip.com').get('/').delay(100).reply(404)
+    const wrapper = visit('/async')
+
+    let message;
+    try {
+      await wrapper.waitForAjax(50)
+    } catch (err) {
+      message = err
+    }
+
+    expect(message).toEqual(expect.stringContaining('More than 50 ms passed'))
+  })
 })
