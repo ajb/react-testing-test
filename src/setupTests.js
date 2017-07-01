@@ -5,10 +5,6 @@ import nock from 'nock'
 import 'jest-enzyme'
 import $ from 'jquery'
 
-Object.defineProperty(window.location, 'pathname', {
-  writable: true
-})
-
 ReactWrapper.prototype.findByText = function(selector, text) {
   return this.find(selector).findWhere((node) => {
     return node.text().includes(text)
@@ -26,13 +22,7 @@ ReactWrapper.prototype.navigate = function(path) {
   this.find('Router').prop('history').replace(path)
 }
 
-global.visit = function(url) {
-  window.location.pathname = url
-  const wrapper = mount(<App />)
-  return wrapper
-}
-
-global.waitForAjax = function() {
+ReactWrapper.prototype.waitForAjax = function() {
   if ($.active === 0) {
     return Promise.resolve()
   } else {
@@ -48,6 +38,15 @@ global.waitForAjax = function() {
       _poll()
     })
   }
+}
+
+global.visit = function(url) {
+  Object.defineProperty(window.location, 'pathname', {
+    writable: true
+  })
+
+  window.location.pathname = url
+  return mount(<App />)
 }
 
 afterEach(() => {

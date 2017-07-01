@@ -31,7 +31,7 @@ describe('the home page', () => {
 
   test('it allows outgoing API calls', async () => {
     const wrapper = visit('/async')
-    await waitForAjax()
+    await wrapper.waitForAjax()
     expect(wrapper).toIncludeText('IP address')
   })
 
@@ -50,7 +50,7 @@ describe('the home page', () => {
     )
 
     const wrapper = visit('/async')
-    await waitForAjax()
+    await wrapper.waitForAjax()
     expect(wrapper).toIncludeText('lmaothisisyourip')
   })
 })
