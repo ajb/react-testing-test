@@ -24,18 +24,19 @@ class Async extends Component {
     super(props);
 
     this.state = {
-      ipAddress: false
+      data: false
     }
 
-    $.getJSON('https://jsonip.com/', (data) => {
-      this.setState({ipAddress: data.ip})
-    })
+    $.getJSON(
+      `${process.env.REACT_APP_API_URI}/users`,
+      data => this.setState({ data: data })
+    )
   }
 
   render() {
     return (
       <div>
-        {this.state.ipAddress ? `Your IP address is: ${this.state.ipAddress}` : 'Loading...'}
+        {this.state.data ? `Received from backend: ${JSON.stringify(this.state.data)}` : 'Loading...'}
       </div>
     )
   }

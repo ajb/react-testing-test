@@ -2,6 +2,12 @@ import React from 'react'
 import nock from 'nock'
 import {browserHistory} from "react-router"
 
+const apiMock = nock('http://mockedapi.com')
+                  .defaultReplyHeaders({
+                    'Access-Control-Allow-Origin': '*',
+                    'Content-Type': 'application/json'
+                  })
+
 describe('the home page', () => {
   test('renders without crashing', () => {
     const wrapper = visit('/')
@@ -29,33 +35,16 @@ describe('the home page', () => {
     expect(wrapper.find('h2').text()).toEqual('Hello, Foobar!')
   })
 
-  test('it allows outgoing API calls', async () => {
-    const wrapper = visit('/async')
-    await wrapper.waitForAjax()
-    expect(wrapper).toIncludeText('IP address')
-  })
-
   test('it mocks API calls', async () => {
-    nock('https://jsonip.com').get('/').reply(
-      200,
-      {
-        ip: "lmaothisisyourip"
-      },
-      [
-        'Content-Type',
-        'application/json; charset=utf-8',
-        'Access-Control-Allow-Origin',
-        '*',
-      ]
-    )
+    apiMock.get('/users').reply(200, { name: "fake_user_name" })
 
     const wrapper = visit('/async')
     await wrapper.waitForAjax()
-    expect(wrapper).toIncludeText('lmaothisisyourip')
+    expect(wrapper).toIncludeText('fake_user_name')
   })
 
   test('it has a timeout for waitForAjax', async () => {
-    nock('https://jsonip.com').get('/').delay(100).reply(404)
+    apiMock.get('/users').delay(100).reply(404)
     const wrapper = visit('/async')
 
     let message;
