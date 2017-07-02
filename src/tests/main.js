@@ -19,11 +19,11 @@ describe('react app', () => {
     expect(browser.element('h2').getText()).toBe('Hello, Foobar!')
   })
 
-  it('allows outgoing API calls', () => {
-    browser.url('/async')
-    browser.waitForAjax()
-    expect(browser.element('body').getText()).toContain('IP address')
-  })
+  // it('allows outgoing API calls', () => {
+  //   browser.url('/async')
+  //   browser.waitForAjax()
+  //   expect(browser.element('body').getText()).toContain('IP address')
+  // })
 
   // test('it mocks API calls', async () => {
   //   nock('https://jsonip.com').get('/').reply(
