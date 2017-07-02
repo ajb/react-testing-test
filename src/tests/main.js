@@ -22,8 +22,8 @@ describe('react app', () => {
   it('mocks API calls', () => {
     browser.url('/')
 
-    browser.execute(function(){
-      mockApi.get('http://localhost:3001/users', function(request){
+    browser.execute(() => {
+      mockApi.get('http://localhost:3001/users', _req => {
         return [
           200,
           {
