@@ -6,8 +6,10 @@ import {
 } from 'react-router-dom'
 
 import $ from 'jquery'
+import Pretender from "pretender"
 
 window.$ = $
+window.mockApi = new Pretender()
 
 const Home = () => (
   <div>

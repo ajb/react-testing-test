@@ -20,8 +20,23 @@ describe('react app', () => {
   })
 
   it('mocks API calls', () => {
-    browser.url('/async')
-    browser.waitForAjax()
+    browser.url('/')
+
+    browser.execute(function(){
+      mockApi.get('http://localhost:3001/users', function(request){
+        return [
+          200,
+          {
+            "Content-Type": "application/json"
+          },
+          JSON.stringify({
+            id: "fake_user_name"
+          })
+        ]
+      })
+     })
+
+    browser.click('[href="/async"]')
     expect(browser.element('body').getText()).toContain('fake_user_name')
   })
 })

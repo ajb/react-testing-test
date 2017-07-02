@@ -176,20 +176,8 @@ exports.config = {
      * Hook that gets executed before the suite starts
      * @param {Object} suite suite details
      */
-    beforeSuite: function (suite) {
-        const jsonServer = require('json-server')
-        const server = jsonServer.create()
-        const router = jsonServer.router({
-          users: [
-            { id: 1, name: 'fake_user_name' }
-          ]
-        })
-        const middlewares = jsonServer.defaults()
-
-        server.use(middlewares)
-        server.use(router)
-        server.listen(3001)
-    },
+    // beforeSuite: function (suite) {
+    // },
     /**
      * Hook that gets executed _before_ a hook within the suite starts (e.g. runs before calling
      * beforeEach in Mocha)

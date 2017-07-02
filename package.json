@@ -7,6 +7,7 @@
     "jquery": "^3.2.1",
     "json-server": "^0.10.3",
     "nock": "^9.0.13",
+    "pretender": "^1.4.2",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-router-dom": "^4.1.1",
