@@ -19,28 +19,9 @@ describe('react app', () => {
     expect(browser.element('h2').getText()).toBe('Hello, Foobar!')
   })
 
-  // it('allows outgoing API calls', () => {
-  //   browser.url('/async')
-  //   browser.waitForAjax()
-  //   expect(browser.element('body').getText()).toContain('IP address')
-  // })
-
-  // test('it mocks API calls', async () => {
-  //   nock('https://jsonip.com').get('/').reply(
-  //     200,
-  //     {
-  //       ip: "lmaothisisyourip"
-  //     },
-  //     [
-  //       'Content-Type',
-  //       'application/json; charset=utf-8',
-  //       'Access-Control-Allow-Origin',
-  //       '*',
-  //     ]
-  //   )
-
-  //   const wrapper = visit('/async')
-  //   await wrapper.waitForAjax()
-  //   expect(wrapper).toIncludeText('lmaothisisyourip')
-  // })
+  it('mocks API calls', () => {
+    browser.url('/async')
+    browser.waitForAjax()
+    expect(browser.element('body').getText()).toContain('fake_user_name')
+  })
 })

@@ -58,7 +58,7 @@ exports.config = {
     sync: true,
     //
     // Level of logging verbosity: silent | verbose | command | data | result | error
-    logLevel: 'error',
+    logLevel: 'silent',
     //
     // Enables colors for log output.
     coloredLogs: true,
@@ -75,7 +75,7 @@ exports.config = {
     baseUrl: 'http://localhost:3000',
     //
     // Default timeout for all waitFor* commands.
-    waitforTimeout: 10000,
+    waitforTimeout: 50000,
     //
     // Default timeout in milliseconds for request
     // if Selenium Grid doesn't send response
@@ -176,8 +176,20 @@ exports.config = {
      * Hook that gets executed before the suite starts
      * @param {Object} suite suite details
      */
-    // beforeSuite: function (suite) {
-    // },
+    beforeSuite: function (suite) {
+        const jsonServer = require('json-server')
+        const server = jsonServer.create()
+        const router = jsonServer.router({
+          users: [
+            { id: 1, name: 'fake_user_name' }
+          ]
+        })
+        const middlewares = jsonServer.defaults()
+
+        server.use(middlewares)
+        server.use(router)
+        server.listen(3001)
+    },
     /**
      * Hook that gets executed _before_ a hook within the suite starts (e.g. runs before calling
      * beforeEach in Mocha)

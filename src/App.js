@@ -31,7 +31,8 @@ class Async extends Component {
 
     $.getJSON(
       `${process.env.REACT_APP_API_URI}/users`,
-      data => this.setState({ data: data })
+      data => this.setState({ data: data }),
+      err => console.log(err)
     )
   }
 
