@@ -19,13 +19,7 @@ const About = () => (
   </div>
 )
 
-const Topic = ({ match }) => (
-  <div>
-    <h3>{match.params.topicId}</h3>
-  </div>
-)
-
-class AsyncPage extends Component {
+class Async extends Component {
   constructor(props) {
     super(props);
 
@@ -84,53 +78,24 @@ class Form extends Component {
   }
 }
 
-const Topics = ({ match }) => (
-  <div>
-    <h2>Topics</h2>
-    <ul>
-      <li>
-        <Link to={`${match.url}/rendering`}>
-          Rendering with React
-        </Link>
-      </li>
-      <li>
-        <Link to={`${match.url}/components`}>
-          Components
-        </Link>
-      </li>
-      <li>
-        <Link to={`${match.url}/props-v-state`}>
-          Props v. State
-        </Link>
-      </li>
-    </ul>
-
-    <Route path={`${match.url}/:topicId`} component={Topic}/>
-    <Route exact path={match.url} render={() => (
-      <h3>Please select a topic.</h3>
-    )}/>
-  </div>
-)
-
-const BasicExample = () => (
+const App = () => (
   <Router>
     <div>
       <ul>
         <li><Link to="/">Home</Link></li>
         <li><Link to="/async">Async</Link></li>
         <li><Link to="/about">About</Link></li>
-        <li><Link to="/topics">Topics</Link></li>
-        <li><Link to="/form">The greatest form</Link></li>
+        <li><Link to="/form">Form</Link></li>
       </ul>
 
       <hr/>
 
       <Route exact path="/" component={Home}/>
-      <Route path="/async" component={AsyncPage}/>
+      <Route path="/async" component={Async}/>
       <Route path="/about" component={About}/>
-      <Route path="/topics" component={Topics}/>
       <Route path="/form" component={Form}/>
     </div>
   </Router>
 )
-export default BasicExample
+
+export default App
